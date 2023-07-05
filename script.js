@@ -17,5 +17,27 @@ function addTask(){
         li.appendChild(span);
     }
     inputBox.value="";
+    saveData();
 }
-// 20mins
+// whenever we will click on the container where we have stored all the task first it will check where we have clicked if we have clicked LI it will add the checked classlist if it is already there it will remove it and if clicked on span it will delete the parent element
+listContainer.addEventListener("click",function(e){
+    if(e.target.tagName === "LI"){
+        e.target.classList.toggle("checked");
+        saveData();
+    }
+    else if(e.target.tagName === "SPAN"){
+        e.target.parentElement.remove();
+        saveData();
+    }
+},false);
+
+// function to store the data even after page is refreshed in local storage
+// we need to call this function everytime we add any changes
+function saveData(){
+    localStorage.setItem("data",listContainer.innerHTML);
+}
+// we also need to show the data even when the browser is reopened
+function showTask(){
+    listContainer.innerHTML = localStorage.getItem("data");
+}
+showTask();
